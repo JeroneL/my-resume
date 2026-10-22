@@ -1,0 +1,305 @@
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  color: #333;
+  background: white;
+  line-height: 1.6;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 8%;
+  border-bottom: 1px solid #eee;
+  background: white;
+}
+
+.brand {
+  font-size: 23px;
+  font-weight: bold;
+  color: #244b96;
+  text-decoration: none;
+}
+
+nav {
+  display: flex;
+  gap: 22px;
+}
+
+nav a {
+  color: #333;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+nav a:hover {
+  color: #2454a6;
+}
+
+.hero {
+  background: #f2f6fc;
+  padding: 75px 10%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 35px;
+}
+
+.hero > div:first-child {
+  max-width: 650px;
+}
+
+.tag {
+  color: #2454a6;
+  font-size: 13px;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+.hero h1 {
+  font-size: 42px;
+  margin-bottom: 8px;
+}
+
+.hero h1 span {
+  color: #2454a6;
+}
+
+.hero h3 {
+  font-weight: normal;
+  margin-bottom: 15px;
+}
+
+.hero p {
+  margin-bottom: 18px;
+}
+
+.avatar {
+  min-width: 145px;
+  height: 145px;
+  border-radius: 50%;
+  background: #2454a6;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 65px;
+}
+
+.button {
+  display: inline-block;
+  padding: 10px 17px;
+  margin: 5px 8px 5px 0;
+  border-radius: 5px;
+  background: #2454a6;
+  color: white;
+  text-decoration: none;
+  border: 1px solid #2454a6;
+}
+
+.button.outline {
+  background: white;
+  color: #2454a6;
+}
+
+.section {
+  padding: 55px 10%;
+}
+
+.section h2,
+.form-card h2 {
+  text-align: center;
+  color: #244b96;
+  margin-bottom: 22px;
+}
+
+.section > p {
+  max-width: 800px;
+  margin: auto;
+  text-align: center;
+}
+
+.shaded {
+  background: #f6f8fc;
+}
+
+.item {
+  background: white;
+  border: 1px solid #e3e8f0;
+  border-radius: 7px;
+  padding: 22px;
+  margin: 12px 0;
+}
+
+.item h3 {
+  color: #244b96;
+  margin-bottom: 8px;
+}
+
+.item span {
+  font-size: 13px;
+  color: #2454a6;
+}
+
+.skills {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+
+.skills div {
+  text-align: center;
+  padding: 17px;
+  background: #f2f6fc;
+  border: 1px solid #e3e8f0;
+  border-radius: 5px;
+}
+
+.projects {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.contact {
+  text-align: center;
+  background: #f6f8fc;
+}
+
+.contact p {
+  margin: 8px;
+}
+
+.form-section {
+  padding: 35px 15px;
+  background: #f1f5f9;
+  min-height: 80vh;
+}
+
+.form-card {
+  max-width: 480px;
+  margin: auto;
+  padding: 28px;
+  background: white;
+  border-radius: 9px;
+  box-shadow: 0 3px 15px #00000010;
+}
+
+.form-card > p {
+  text-align: center;
+  color: #666;
+  margin-bottom: 18px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin: 13px 0 5px;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 11px;
+  border: 1px solid #cbd5e1;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+input:focus,
+select:focus {
+  outline: 2px solid #bfdbfe;
+  border-color: #2454a6;
+}
+
+small {
+  display: block;
+  color: #dc2626;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 20px;
+  background: #2454a6;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+button:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+}
+
+.success {
+  color: #15803d;
+  text-align: center;
+  margin-top: 15px;
+  font-weight: bold;
+}
+
+footer {
+  text-align: center;
+  padding: 18px;
+  background: #203f7c;
+  color: white;
+  font-size: 13px;
+}
+
+@media (max-width: 700px) {
+  .navbar {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  nav {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 13px;
+  }
+
+  .hero {
+    flex-direction: column-reverse;
+    text-align: center;
+    padding: 45px 7%;
+  }
+
+  .hero h1 {
+    font-size: 34px;
+  }
+
+  .avatar {
+    min-width: 110px;
+    height: 110px;
+    font-size: 48px;
+  }
+
+  .section {
+    padding: 40px 7%;
+  }
+
+  .skills {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .projects {
+    grid-template-columns: 1fr;
+  }
+
+  .form-card {
+    padding: 20px;
+  }
+}
