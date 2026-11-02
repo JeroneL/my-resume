@@ -1,98 +1,74 @@
 
-import React, { useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route, Link, useLocation } from "react-router-dom";
+import React, { useState } from "react";
+import {
+  HashRouter,
+  Routes,
+  Route,
+  Link
+} from "react-router-dom";
 import "./App.css";
+
+function Navbar() {
+  return (
+    <header>
+      <h1>Jerone L</h1>
+      <p>Computer Science Student | Online Resume</p>
+      <nav>
+        <Link to="/">Home</Link>
+        <Link to="/about">About</Link>
+        <Link to="/register">Register</Link>
+        <Link to="/contact">Contact</Link>
+      </nav>
+    </header>
+  );
+}
+
+function Footer() {
+  return (
+    <footer>
+      <p>© 2026 Jerone L | Online Resume</p>
+    </footer>
+  );
+}
 
 function Home() {
   return (
-    <>
-      <section className="hero" id="home">
-        <div>
-          <p className="tag">MY PERSONAL PORTFOLIO</p>
-          <h1>Hi, I'm <span>Jerone L</span></h1>
-          <h3>Computer Science Engineering Student</h3>
-          <p>
-            I am passionate about web development, Java programming,
-            and building useful software applications.
-          </p>
-          <a href="#projects" className="button">View My Projects</a>
-          <Link to="/register" className="button outline">
-            Register Now
-          </Link>
-        </div>
-        <div className="avatar">J</div>
-      </section>
+    <section className="card">
+      <h2>Welcome to My Online Resume</h2>
+      <p>
+        Hello! I am Jerone L, a Computer Science and
+        Engineering student at Karunya University.
+      </p>
+      <p>
+        Explore my education, technical skills and projects.
+        Register to demonstrate the form validation feature.
+      </p>
+      <Link className="button" to="/about">
+        View My Profile
+      </Link>
+    </section>
+  );
+}
 
-      <section className="section" id="about">
-        <h2>About Me</h2>
-        <p>
-          I am a Computer Science and Engineering student at
-          Karunya University. I enjoy learning new technologies,
-          solving problems, and developing practical applications.
-          My goal is to become a skilled software developer.
-        </p>
-      </section>
+function About() {
+  return (
+    <section className="card">
+      <h2>About Me</h2>
+      <p><b>Name:</b> Jerone L</p>
+      <p><b>Department:</b> Computer Science and Engineering</p>
+      <p><b>University:</b> Karunya University</p>
 
-      <section className="section shaded" id="education">
-        <h2>Education</h2>
-        <div className="item">
-          <h3>B.Tech - Computer Science and Engineering</h3>
-          <p>Karunya University, Coimbatore</p>
-          <p>2024 – 2028</p>
-        </div>
-      </section>
+      <h3>Technical Skills</h3>
+      <ul>
+        <li>Java Programming</li>
+        <li>HTML, CSS and JavaScript</li>
+        <li>ReactJS</li>
+        <li>Database Management Systems</li>
+      </ul>
 
-      <section className="section" id="skills">
-        <h2>Technical Skills</h2>
-        <div className="skills">
-          <div>HTML & CSS</div>
-          <div>JavaScript</div>
-          <div>ReactJS</div>
-          <div>Java</div>
-          <div>Python</div>
-          <div>PostgreSQL</div>
-        </div>
-      </section>
-
-      <section className="section shaded" id="projects">
-        <h2>My Projects</h2>
-        <div className="projects">
-          <div className="item">
-            <h3>Smart Recipe Manager</h3>
-            <p>
-              A Java Swing application using PostgreSQL to search
-              recipes and manage favorite dishes.
-            </p>
-            <span>Java · PostgreSQL</span>
-          </div>
-
-          <div className="item">
-            <h3>FraudGraph AI</h3>
-            <p>
-              A financial fraud detection project to identify
-              suspicious transactions and connected accounts.
-            </p>
-            <span>Python · Data Analysis</span>
-          </div>
-
-          <div className="item">
-            <h3>Automatic Railway Gate</h3>
-            <p>
-              An embedded system that uses sensors and a servo
-              motor to automate railway gate operation.
-            </p>
-            <span>Arduino · Embedded Systems</span>
-          </div>
-        </div>
-      </section>
-
-      <section className="section contact" id="contact">
-        <h2>Contact Me</h2>
-        <p>Email: YOUR_EMAIL@example.com</p>
-        <p>Location: Coimbatore, Tamil Nadu</p>
-        <Link to="/register" className="button">Register Here</Link>
-      </section>
-    </>
+      <h3>Project</h3>
+      <p>Smart Hostel Room Allocation and Maintenance Management System</p>
+    </section>
   );
 }
 
@@ -107,13 +83,8 @@ function Register() {
     state: ""
   });
 
+  const [touched, setTouched] = useState({});
   const [submitted, setSubmitted] = useState(false);
-  const [attempted, setAttempted] = useState(false);
-
-  const updateField = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-    setSubmitted(false);
-  };
 
   const errors = {
     name: !/^[A-Za-z ]+$/.test(form.name.trim()),
@@ -121,140 +92,137 @@ function Register() {
     password: !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/.test(form.password),
     age: !/^\d+$/.test(form.age) ||
       Number(form.age) < 18 || Number(form.age) > 30,
-    mobile: !/^\d{10}$/.test(form.mobile)
+    mobile: !/^\d{10}$/.test(form.mobile),
+    gender: !form.gender,
+    state: !form.state
   };
 
   const valid =
     form.name.trim() !== "" && !errors.name &&
     form.email !== "" && !errors.email &&
-    !errors.password &&
+    form.password !== "" && !errors.password &&
     form.age !== "" && !errors.age &&
-    !errors.mobile && form.gender !== "" && form.state !== "";
+    form.mobile !== "" && !errors.mobile &&
+    !errors.gender && !errors.state;
+
+  function updateField(e) {
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
+    setSubmitted(false);
+  }
+
+  function showError(field, message) {
+    if (touched[field] && errors[field]) {
+      return <small>{message}</small>;
+    }
+    return null;
+  }
+
+  function handleBlur(e) {
+    setTouched({ ...touched, [e.target.name]: true });
+  }
 
   function handleSubmit(e) {
     e.preventDefault();
-    setAttempted(true);
     if (valid) setSubmitted(true);
   }
 
   return (
-    <section className="form-section">
-      <div className="form-card">
-        <h2>Registration Form</h2>
-        <p>Enter your details below.</p>
+    <section className="card">
+      <h2>Registration Form</h2>
+      <p className="intro">Enter your details to register.</p>
 
-        <form onSubmit={handleSubmit} noValidate>
-          <label>Full Name</label>
-          <input name="name" value={form.name}
-            onChange={updateField} placeholder="Your full name" />
-          {((form.name && errors.name) ||
-            (attempted && !form.name.trim())) &&
-            <small>Enter a valid name using letters and spaces.</small>}
+      <form onSubmit={handleSubmit} noValidate>
+        <label>Full Name</label>
+        <input name="name" value={form.name}
+          onChange={updateField} onBlur={handleBlur}
+          placeholder="Enter full name" required />
+        {showError("name", "Use letters and spaces only.")}
 
-          <label>Email</label>
-          <input name="email" type="email" value={form.email}
-            onChange={updateField} placeholder="you@example.com" />
-          {((form.email && errors.email) ||
-            (attempted && !form.email)) &&
-            <small>Enter a valid email address.</small>}
+        <label>Email Address</label>
+        <input name="email" type="email" value={form.email}
+          onChange={updateField} onBlur={handleBlur}
+          placeholder="name@example.com" required />
+        {showError("email", "Enter a valid email address.")}
 
-          <label>Password</label>
-          <input name="password" type="password" value={form.password}
-            onChange={updateField} placeholder="Minimum 8 characters" />
-          {((form.password && errors.password) ||
-            (attempted && !form.password)) &&
-            <small>Use uppercase, lowercase, a number and 8 characters.</small>}
+        <label>Password</label>
+        <input name="password" type="password" value={form.password}
+          onChange={updateField} onBlur={handleBlur}
+          placeholder="At least 8 characters" required />
+        {showError("password", "Use uppercase, lowercase, a number and 8 characters.")}
 
-          <label>Age</label>
-          <input name="age" type="number" value={form.age}
-            onChange={updateField} placeholder="Age (18–30)" />
-          {((form.age && errors.age) ||
-            (attempted && !form.age)) &&
-            <small>Age must be between 18 and 30.</small>}
+        <label>Age</label>
+        <input name="age" type="number" value={form.age}
+          onChange={updateField} onBlur={handleBlur}
+          placeholder="Age: 18–30" required />
+        {showError("age", "Age must be between 18 and 30.")}
 
-          <label>Mobile Number</label>
-          <input name="mobile" type="tel" value={form.mobile}
-            onChange={updateField} placeholder="10-digit mobile number" />
-          {((form.mobile && errors.mobile) ||
-            (attempted && !form.mobile)) &&
-            <small>Enter exactly 10 digits.</small>}
+        <label>Mobile Number</label>
+        <input name="mobile" type="tel" value={form.mobile}
+          onChange={updateField} onBlur={handleBlur}
+          placeholder="10-digit mobile number" required />
+        {showError("mobile", "Enter exactly 10 digits.")}
 
-          <label>Gender</label>
-          <select name="gender" value={form.gender} onChange={updateField}>
-            <option value="">Select gender</option>
-            <option>Male</option>
-            <option>Female</option>
-            <option>Other</option>
-          </select>
-          {attempted && !form.gender && <small>Select your gender.</small>}
+        <label>Gender</label>
+        <select name="gender" value={form.gender}
+          onChange={updateField} onBlur={handleBlur} required>
+          <option value="">Select gender</option>
+          <option>Male</option>
+          <option>Female</option>
+          <option>Other</option>
+        </select>
+        {showError("gender", "Please select a gender.")}
 
-          <label>State</label>
-          <select name="state" value={form.state} onChange={updateField}>
-            <option value="">Select state</option>
-            <option>Tamil Nadu</option>
-            <option>Kerala</option>
-            <option>Karnataka</option>
-            <option>Andhra Pradesh</option>
-            <option>Other</option>
-          </select>
-          {attempted && !form.state && <small>Select your state.</small>}
+        <label>State</label>
+        <select name="state" value={form.state}
+          onChange={updateField} onBlur={handleBlur} required>
+          <option value="">Select state</option>
+          <option>Tamil Nadu</option>
+          <option>Kerala</option>
+          <option>Karnataka</option>
+          <option>Andhra Pradesh</option>
+        </select>
+        {showError("state", "Please select a state.")}
 
-          <button type="submit" disabled={!valid}>
-            Submit Registration
-          </button>
+        <button type="submit" disabled={!valid}>
+          Submit Registration
+        </button>
 
-          {submitted && (
-            <p className="success">Registration successful!</p>
-          )}
-        </form>
-      </div>
+        {submitted && (
+          <p className="success">
+            Registration completed successfully!
+          </p>
+        )}
+      </form>
     </section>
   );
 }
 
-function ScrollToHashElement() {
-  const { pathname, hash } = useLocation();
-
-  useEffect(() => {
-    if (hash) {
-      const element = document.getElementById(hash.replace("#", ""));
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
-      }
-    } else {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-  }, [pathname, hash]);
-
-  return null;
+function Contact() {
+  return (
+    <section className="card">
+      <h2>Contact Me</h2>
+      <p><b>Email:</b> jeronel@karunya.edu.in</p>
+      <p><b>Phone:</b> 7548891498</p>
+      <p><b>University:</b> Karunya University</p>
+    </section>
+  );
 }
-
-const currentYear = new Date().getFullYear();
 
 function App() {
   return (
-    <BrowserRouter basename={import.meta.env.BASE_URL}>
-      <ScrollToHashElement />
-      <header className="navbar">
-        <Link to="/" className="brand">Jerone L</Link>
-        <nav>
-          <Link to="/">Home</Link>
-          <Link to="/#about">About</Link>
-          <Link to="/#education">Education</Link>
-          <Link to="/#projects">Projects</Link>
-          <Link to="/register">Register</Link>
-        </nav>
-      </header>
-
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/register" element={<Register />} />
-      </Routes>
-
-      <footer>
-        © {currentYear} Jerone L | Personal Resume
-      </footer>
-    </BrowserRouter>
+    <HashRouter>
+  <Navbar />
+  <main>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/about" element={<About />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="/contact" element={<Contact />} />
+    </Routes>
+  </main>
+  <Footer />
+</HashRouter>
   );
 }
 
